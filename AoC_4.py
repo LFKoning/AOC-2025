@@ -41,12 +41,12 @@ def get_adjacent(pos_x, pos_y, matrix):
 
     # Get 8 adjacent positions.
     adjacent = []
-    for dx in range(-1, 2):
-        for dy in range(-1, 2):
+    for dx in (-1, 0, 1):
+        for dy in (-1, 0, 1):
             # Skip self.
             if dx == 0 and dy == 0:
                 continue
-            
+
             x = pos_x + dx
             y = pos_y + dy
 
@@ -56,7 +56,7 @@ def get_adjacent(pos_x, pos_y, matrix):
 
             else:
                 adjacent. append(matrix[y][x])
-    
+
     return adjacent
 
 
@@ -67,18 +67,18 @@ def _(matrix):
     for y in range(len(matrix)):
         # Initialize the row.
         reachable.append([])
-    
+
         for x in range(len(matrix[y])):
             # Not a roll of paper.
             if matrix[y][x] == 0:
                 print(f"row: {y}, position {x}: no roll")
                 reachable[y].append(0)
                 continue
-        
+
             # Get adjacent values.
             adjacent = get_adjacent(x, y, matrix)
             print(f"row: {y}, position {x}: {sum(adjacent)} adjacent")
-        
+
             # Check reachability.
             if sum(adjacent) < 4:
                 reachable[y].append(1)
