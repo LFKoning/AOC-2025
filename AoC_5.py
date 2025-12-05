@@ -44,17 +44,17 @@ def _(data):
 @app.cell
 def _(ranges):
     # Make sure ranges are sorted by their lower bound.
-    sorted(ranges)
-    return
+    sranges = sorted(ranges)
+    return (sranges,)
 
 
 @app.cell
-def _(items, ranges):
+def _(items, sranges):
     # Check items fall in a freshness range.
     fresh = []
     for item in items:
         print(f"Processing item: {item}")
-        for (low, high) in ranges:
+        for (low, high) in sranges:
             # Item won't be in higher ranges
             if item < low:
                 break
