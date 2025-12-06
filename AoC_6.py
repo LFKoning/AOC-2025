@@ -34,7 +34,10 @@ def _():
                 raise ValueError(f"Invalid operator: {operator_str}")
 
         def add(self, value):
-            self._values.append(int(value))
+            try:
+                self._values.append(int(value))
+            except (ValueError, TypeError):
+                raise ValueError(f"Could not convert value to integer: {value}")
 
         def __repr__(self):
             return f"{self.__class__.__name__}()"
@@ -63,6 +66,8 @@ def _():
 @app.cell
 def _(sheet):
     # Preprocess the input.
+    # Note: assuming the input is always a square matrix
+    # with operators on the last line...
     lines = sheet.strip().split("\n")
     return (lines,)
 
