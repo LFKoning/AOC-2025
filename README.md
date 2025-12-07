@@ -5,6 +5,8 @@ This repo holds my solutions for the Advent of Code 2025 puzzles. I did not crea
 All files are Marimo Notebooks. If you clone the repository you can easily run them with uv:
 
 ```bash
+git clone https://github.com/LFKoning/AOC-2025.git
+cd AOC-2025
 uv run marimo edit AoC_1.py
 ```
 
