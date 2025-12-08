@@ -104,9 +104,21 @@ def create_circuits(distances: list[tuple], connect_max: int) -> list:
     # Connect junctions with shortest distances into curcuits.
     for distance, left, right in sorted(distances, key=lambda c: c[0]):
 
-        # Both left and right are already part of a circuit.abs
+        # Both left and right are already part of a circuit.
         if left in connected and right in connected:
-            print(f"Both {left} and {right} already connected, skipping...")
+            # Same circuit.
+            if connected[left] == connected[right]:
+                print(f"Both {left} and {right} connected in same circuit, skipping...")
+                continue
+
+            # Merging circuits, keeping the left circuit.
+            print(f"Merging circuits {connected[left]} and {connected[right]}")
+            left_idx = connected[left]
+            right_idx = connected[right]
+            circuits[left_idx] |= circuits[right_idx]
+            
+            # Remove the right circuit.
+            circuits[right_idx] = None
             continue
 
         print(f"Creating connection {n_connections} with distance {distance:.2f}")
