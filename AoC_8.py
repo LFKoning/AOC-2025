@@ -100,41 +100,41 @@ def create_circuits(distances: list[tuple], connect_max: int) -> list:
     n_connections = 1
     connected = {}
     circuits = []
-    
+
     # Connect junctions with shortest distances into curcuits.
     for distance, left, right in sorted(distances, key=lambda c: c[0]):
-        
+
         # Both left and right are already part of a circuit.abs
         if left in connected and right in connected:
             print(f"Both {left} and {right} already connected, skipping...")
             continue
 
-        print(f"Creating connection: {n_connections}")
-        
+        print(f"Creating connection {n_connections} with distance {distance:.2f}")
+
         # Left is part of an existing circuit.
         if left in connected:
             circuit_idx = connected[left]
             circuits[circuit_idx].add(right)
             connected[right] = circuit_idx
             print(f"Connected {right} to existing circuit {circuit_idx}.")
-    
+
         # Right is part of an existing circuit.
         elif right in connected:
             circuit_idx = connected[right]
             circuits[circuit_idx].add(left)
             connected[left] = circuit_idx
             print(f"Connected {left} to existing circuit {circuit_idx}.")
-    
+
         # Create a new circuit.
         else:
             circuit_idx = len(circuits)
             circuits.append(set((left, right)))
-    
+
             # Store junction <-> circuit connections.
             connected[left] = circuit_idx
             connected[right] = circuit_idx
             print(f"Created circuit {circuit_idx} from {left} and {right}.")
-    
+
         # Stopping at max connections.
         n_connections += 1
         if n_connections > connect_max:
